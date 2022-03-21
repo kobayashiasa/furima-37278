@@ -4,7 +4,7 @@ RSpec.describe Item, type: :model do
   before do
     @item = FactoryBot.build(:item)
   end
-  
+
   describe '商品出品' do
     context '出品できる場合' do
       it '全てのフォームに正しく記述されていれば保存できる' do
