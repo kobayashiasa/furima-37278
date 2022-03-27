@@ -12,5 +12,5 @@ class Item < ApplicationRecord
   validates :item_name, :item_price, :item_info, :image, presence: true
   validates :category_id, :item_condition_id, :who_pays_shipping_id, :prefecture_id, :shipping_date_id,
             numericality: { other_than: 1, message: "can't be blank" }
-  validates :item_price, numericality: { greater_than_or_equal_to: 300, less_than: 9_999_999, message: 'is out of setting range' }
+  validates :item_price, numericality: { only_integer: true, greater_than_or_equal_to: 300, less_than: 9_999_999, message: 'is out of setting range' }
 end

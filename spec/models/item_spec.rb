@@ -22,8 +22,18 @@ RSpec.describe Item, type: :model do
         @item.valid?
         expect(@item.errors.full_messages).to include("Item price can't be blank")
       end
-      it 'item_priceが300~9999999でなければ保存できない' do
+      it 'item_priceが300未満では保存できない' do
         @item.item_price = '10'
+        @item.valid?
+        expect(@item.errors.full_messages).to include('Item price is out of setting range')
+      end
+      it 'item_priceが9999999を超えると保存できない' do
+        @item.item_price = '10000000'
+        @item.valid?
+        expect(@item.errors.full_messages).to include('Item price is out of setting range')
+      end
+      it 'item_priceに半角英数以外が含まれていると保存できない' do
+        @item.item_price = '５００'
         @item.valid?
         expect(@item.errors.full_messages).to include('Item price is out of setting range')
       end
@@ -61,6 +71,11 @@ RSpec.describe Item, type: :model do
         @item.shipping_date_id = 1
         @item.valid?
         expect(@item.errors.full_messages).to include("Shipping date can't be blank")
+      end
+      it 'userが紐づいていなければ保存できない' do
+        @item.user = nil
+        @item.valid?
+        expect(@item.errors.full_messages).to include('User must exist')
       end
     end
   end
