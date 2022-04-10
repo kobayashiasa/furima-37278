@@ -2,6 +2,7 @@ class OrdersController < ApplicationController
   before_action :authenticate_user!
 
   def index
+   @order_shipping_info = OrderShippingInfo.new
   end
 
   def new
@@ -14,13 +15,13 @@ class OrdersController < ApplicationController
       @order_shipping_info.save
       redirect_to root_path
     else
-      render :new
+      render :index
     end
   end
 
   private
   def order_params
-    params.require(:order_shipping_info).permit(:zip_code, :prefecture_id, :city, :address, :building).merge(user_id: current_user.id, item_id: params[:item_id] )
+    params.require(:order_shipping_info).permit(:zip_code, :prefecture_id, :city, :address, :building, :order_id).merge(user_id: current_user.id, item_id: params[:item_id])
   end
 
 end
