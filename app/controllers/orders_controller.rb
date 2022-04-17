@@ -4,6 +4,9 @@ class OrdersController < ApplicationController
   def index
    @order_shipping_info = OrderShippingInfo.new
    @item = Item.find(params[:item_id])
+   if @item.user_id == current_user.id
+    redirect_to root_path
+   end
   end
 
   def new
