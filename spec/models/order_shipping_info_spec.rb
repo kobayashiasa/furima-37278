@@ -45,6 +45,11 @@ RSpec.describe OrderShippingInfo, type: :model do
         @order_shipping_info.valid?
         expect(@order_shipping_info.errors.full_messages).to include("Address can't be blank")
       end
+      it 'phoneが空だと保存できないこと' do
+        @order_shipping_info.phone = ''
+        @order_shipping_info.valid?
+        expect(@order_shipping_info.errors.full_messages).to include("Phone can't be blank")
+      end
       it 'phoneが全角数字だと保存できないこと' do
         @order_shipping_info.phone = '１２３４５６７８９０'
         @order_shipping_info.valid?
