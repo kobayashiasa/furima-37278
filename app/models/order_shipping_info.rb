@@ -1,12 +1,15 @@
 class OrderShippingInfo
   include ActiveModel::Model
   attr_accessor :zip_code, :prefecture_id, :city, :address, :building, :phone, :item_id, :user_id, :token
-  validates :token, :user_id, :item_id, presence: true
+
   with_options presence: true do
     validates :zip_code, format: {with: /\A[0-9]{3}-[0-9]{4}\z/, message: "is invalid. Include hyphen(-)"}
     validates :phone, numericality: {only_integer: true}, length: { in: 10..11 }
     validates :city
     validates :address
+    validates :token
+    validates :user_id
+    validates :item_id
   end
   validates :prefecture_id, numericality: {other_than: 1, message: "can't be blank"}
 
