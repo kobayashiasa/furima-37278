@@ -16,4 +16,11 @@ class Item < ApplicationRecord
   validates :item_price,
             numericality: { only_integer: true, greater_than_or_equal_to: 300, less_than: 9_999_999,
                             message: 'is out of setting range' }
+  def previous
+    Item.where("id < ?", self.id).order("id DESC").first
+  end
+  def next
+    Item.where("id > ?", self.id).order("id ASC").first
+  end
+
 end
